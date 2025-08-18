@@ -1,10 +1,10 @@
-package com.sechandmot.java_study;
+package com.sechandmot.boot;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class JavaStudyApplicationTests {
+class MainApplicationTests {
 
 	@Test
 	void contextLoads() {
