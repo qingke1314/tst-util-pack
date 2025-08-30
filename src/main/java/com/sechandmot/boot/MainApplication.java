@@ -20,9 +20,9 @@ public class MainApplication {
     ConfigurableApplicationContext context = SpringApplication.run(MainApplication.class, args);
 
     // 容器的bean默认是单实例的，所以会相等
-    Pet tom = context.getBean("tom", Pet.class);
-    Pet tom2 = context.getBean("tom", Pet.class);
-    System.out.println("------" + (tom == tom2));
+    Pet wangcai1 = context.getBean("petWangcai", Pet.class);
+    Pet wangcai2 = context.getBean("petWangcai", Pet.class);
+    System.out.println("------" + (wangcai1 == wangcai2));
 
     // 因为加了代理配置，此处拿到的是spring boot的代理对象 beancom.sechandmot.boot.config.MyConfig$$EnhancerBySpringCGLIB$$4f4c6169@1071aeac
     // 不加，则是普通对象，beancom.sechandmot.boot.config.MyConfig@4861b15
@@ -32,13 +32,19 @@ public class MainApplication {
     // 如果@Configuration(proxyBeanMethods = true)代理对象调用方法，spring boot总会检查这个组件是否在容器中有，有则不创
     // 即保证单实例
     // 如果设为false，tom3 tom4 就是新对象
-    Pet tom3 = myConfigBean.getPetBean();
-    Pet tom4 = myConfigBean.getPetBean();
-    System.out.println("---- is tom3 == tom4 " + (tom3 == tom4)); // 开为true 不开为false
+    Pet wangcai3 = myConfigBean.petWangcai();
+    Pet wangcai4 = myConfigBean.petWangcai();
+    System.out.println("---- is tom3 == tom4 " + (wangcai3 == wangcai4)); // 开为true 不开为false
 
-    User getUserBean = context.getBean("getUserBean", User.class);
-    Pet tom5 = context.getBean("tom", Pet.class);
-    System.out.println("用户宠物是否容器宠物:" + (getUserBean.getPet() == tom5));
+    // User userZhangsan = context.getBean("userZhangsan", User.class);
+    // Pet wangcai5 = context.getBean("petWangcai", Pet.class);
+    // System.out.println("用户宠物是否容器宠物:" + (userZhangsan.getPet() == wangcai5));
+
+    // 从容器中获取组件
+    String[] beanNamesWithTypes =  context.getBeanNamesForType(User.class);
+    for(String s : beanNamesWithTypes) {
+      System.out.println("bean name of type >>>" + s);
+    }
   }
   
 }
